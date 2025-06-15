@@ -1,0 +1,5 @@
+CREATE TABLE `minharua`.`token` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `hash` VARCHAR(255) NOT NULL,
+  `username` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`id`));
