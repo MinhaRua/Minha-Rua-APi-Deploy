@@ -10,13 +10,9 @@ export const databaseProviders = [
   {
     provide: 'DATA_SOURCE',
     useFactory: async () => {
-        const dataSource = new DataSource({
+      const dataSource = new DataSource({
         type: 'mysql',
-        host: process.env.MYSQL_HOST,
-        port: parseInt(process.env.MYSQL_PORT || '3306'),
-        username: process.env.MYSQL_USER,
-        password: process.env.MYSQL_PASSWORD,
-        database: process.env.MYSQL_DATABASE,
+        url: process.env.MYSQL_URL, // Usa a URL completa de conexão
         entities: [Usuario, Locations, Token],
         synchronize: true,
         logging: true,
