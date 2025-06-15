@@ -2,17 +2,17 @@ import { DataSource } from 'typeorm';
 import { Usuario } from 'src/Usuario/usuario.entity';
 import { Locations } from 'src/locations/locations.entity';
 import { Token } from 'src/token/token.entity';
-import * as dotenv from 'dotenv';
+/* import * as dotenv from 'dotenv';
 
-dotenv.config();
+dotenv.config(); */
 
 export const databaseProviders = [
   {
     provide: 'DATA_SOURCE',
     useFactory: async () => {
-      const dataSource = new DataSource({
+        const dataSource = new DataSource({
         type: 'mysql',
-        host: process.env.MYSQLHOST,
+        host: process.env.MYSQLHOST, // OK
         port: parseInt(process.env.MYSQLPORT || '3306'),
         username: process.env.MYSQLUSER,
         password: process.env.MYSQLPASSWORD,
