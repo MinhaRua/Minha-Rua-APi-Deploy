@@ -21,7 +21,7 @@ import { Locations } from './locations.entity';
 import { CustomRequest } from './custom-request.interface';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { LocationsEditarDto } from './dto/LocationsEditarDto';
-import { v2 as cloudinary } from 'cloudinary';
+import cloudinary from 'cloudinary.config';
 import * as streamifier from 'streamifier';
 import { Readable } from 'stream';
 

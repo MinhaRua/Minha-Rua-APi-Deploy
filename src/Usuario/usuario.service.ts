@@ -40,9 +40,12 @@ async cadastrar(data: UsuarioCadastrarDto): Promise<Usuario | { status: boolean;
   usuario.cpf = data.cpf;
   usuario.telefone = data.telefone;
   usuario.foto = data.foto;
+  usuario.isAdmin = 0; 
+  usuario.avisos = 0;  
 
   return this.UsuarioRepository.save(usuario);
 }
+
 
   async findOne(email: string): Promise<Usuario | undefined> {
     const usuarios = await this.UsuarioRepository.find();

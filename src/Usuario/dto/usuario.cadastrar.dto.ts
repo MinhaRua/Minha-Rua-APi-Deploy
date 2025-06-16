@@ -4,5 +4,5 @@ export interface UsuarioCadastrarDto{
     password: string;
     cpf?: string;
     telefone?: string;
-    foto: string
+    foto: string;
 }
