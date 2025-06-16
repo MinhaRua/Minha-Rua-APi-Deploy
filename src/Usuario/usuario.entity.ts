@@ -15,10 +15,10 @@ export class Usuario {
   @Column({ length: 255 })
   password: string;
 
-  @Column({ length: 20, unique: true })
+  @Column({ length: 20, unique: true,nullable: true })
   cpf: string;
 
-  @Column({ length: 30, unique: true })
+  @Column({ length: 30, unique: true,nullable: true })
   telefone: string;
 
   @Column()
