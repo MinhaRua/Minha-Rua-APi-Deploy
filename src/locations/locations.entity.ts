@@ -30,7 +30,7 @@ export class Locations {
   @Column({ length: 255, unique: true }) 
   endereco: string;
 
-  @Column()
+  @Column({nullable: true})
   status: number;
 
   @ManyToOne(() => Usuario, usuario => usuario.locations)

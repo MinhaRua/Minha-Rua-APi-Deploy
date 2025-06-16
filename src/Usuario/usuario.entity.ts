@@ -21,10 +21,10 @@ export class Usuario {
   @Column({ length: 30, unique: true,nullable: true })
   telefone: string;
 
-  @Column()
+  @Column({nullable: true})
   isAdmin: number;
 
-  @Column()
+  @Column({nullable: true})
   avisos: number;
 
   @Column({ length: 255 })
