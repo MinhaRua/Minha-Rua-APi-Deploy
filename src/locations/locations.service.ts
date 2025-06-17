@@ -42,6 +42,7 @@ export class LocationsService {
   locations.longitude = data.longitude;
   locations.usuario = usuario;
   locations.endereco = data.endereco;
+  locations.foto_local = data.foto_local;
   locations.status = 0; 
 
   try {
