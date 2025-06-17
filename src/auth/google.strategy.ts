@@ -31,9 +31,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
       accessToken,
     };
 
-    // Aqui você pode verificar se o usuário existe no banco
-    // e criar um novo registro, ou atualizar os dados.
-    console.log('User data processed:', user);
+   
                                                                                                            
         const user1 = await this.authService.validateGoogleUser({
             email: profile.emails[0].value,

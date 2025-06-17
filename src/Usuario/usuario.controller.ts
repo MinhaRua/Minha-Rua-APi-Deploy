@@ -45,7 +45,6 @@ export class UsuarioController {
    
     @Post('login-token')
     async loginToken(@Request() req, @Body() data) {
-       console.log(data)
        return this.authService.loginToken(data.token);
     }
 
@@ -91,9 +90,6 @@ export class UsuarioController {
     @Request() req,
     @Body() updateUserDataDto: UsuarioUpdateDto,
   ) {
-    console.log('ID do usuário:', req.user.id);
-    console.log('Dados recebidos no update:', updateUserDataDto);
-
     return this.usuarioService.updateUserInfo(req.user.id, updateUserDataDto);
   }
 

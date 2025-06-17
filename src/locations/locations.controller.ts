@@ -154,8 +154,6 @@ export class LocationsController {
     @Param('id') id: number,
     @Req() req: CustomRequest,
   ) {
-    console.log('Usuário logado:', req.user);
-
     const usuarioId = req.user.id;
     return this.locationsService.removerMinhaLocation(id, usuarioId);
   }

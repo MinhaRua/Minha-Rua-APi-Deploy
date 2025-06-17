@@ -48,10 +48,7 @@ export class LocationsService {
   try {
     await this.locationsRepository.save(locations);
     const resultado = await this.locationsRepository.save(locations);
-    console.log('Resultado do save:', resultado);
-    return { status: true, mensagem: 'Location salva com sucesso' };
   } catch (error) {
-   console.error('Erro ao salvar location:', error); // <-- ESSENCIAL
     return { status: false, mensagem: 'Erro ao salvar a location' };
   }
 }
