@@ -21,7 +21,7 @@ export class Locations {
   @Column({ length: 255 })
   longitude: string;
 
-  @Column({ type: 'timestamp' })
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   created_at: Date;
 
   @Column({ length: 255 })
