@@ -19,7 +19,15 @@ export class LocationsService {
   });
 }
 
-  async cadastrar(data: locationsCadastrarDto, usuario: Usuario): Promise<locationsResultadoDto> {
+async cadastrar(data: locationsCadastrarDto, usuario: Usuario): Promise<locationsResultadoDto> {
+  // Verifica se o usuário tem 3 ou mais avisos
+  if (usuario.avisos >= 3) {
+    return {
+      status: false,
+      mensagem: 'Você não pode cadastrar uma nova localização pois sua conta possui 3 ou mais avisos.',
+    };
+  }
+
   // Verifica se já existe uma location com a mesma latitude e longitude
   const existente = await this.locationsRepository.findOne({
     where: {
@@ -47,13 +55,11 @@ export class LocationsService {
 
   try {
     await this.locationsRepository.save(locations);
-    const resultado = await this.locationsRepository.save(locations);
+    return { status: true, mensagem: 'Localização cadastrada com sucesso' };
   } catch (error) {
     return { status: false, mensagem: 'Erro ao salvar a location' };
   }
 }
-
-
 
 async deletar(id: number): Promise<void> {
   await this.locationsRepository.delete(id);
