@@ -15,7 +15,7 @@ export const databaseProviders = [
         password: process.env.MYSQLPASSWORD,
         database: process.env.MYSQLDATABASE,
         entities: [Usuario, Locations, Token],
-        synchronize: false,
+        synchronize: true,
         logging: false,
       });
       return dataSource.initialize();
