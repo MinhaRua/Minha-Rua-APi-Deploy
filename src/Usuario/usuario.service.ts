@@ -174,4 +174,124 @@ async adicionarAviso(userId: number): Promise<{
       };
     }
   }
+
+  async listarTodosUsuarios(): Promise<Usuario[]> {
+    return this.UsuarioRepository.find({
+      select: ['id', 'nome', 'email', 'cpf', 'telefone', 'avisos', 'foto']
+    });
+  }
+
+  async pesquisarUsuarios(termo: string): Promise<Usuario[]> {
+    return this.UsuarioRepository.createQueryBuilder('usuario')
+      .where('usuario.nome LIKE :termo OR usuario.email LIKE :termo', { termo: `%${termo}%` })
+      .select(['usuario.id', 'usuario.nome', 'usuario.email', 'usuario.cpf', 'usuario.telefone', 'usuario.avisos', 'usuario.foto'])
+      .getMany();
+  }
+
+  async excluirUsuario(userId: number): Promise<{ status: boolean; mensagem: string }> {
+    try {
+      const usuario = await this.UsuarioRepository.findOne({ where: { id: userId } });
+      
+      if (!usuario) {
+        return {
+          status: false,
+          mensagem: 'Usuário não encontrado'
+        };
+      }
+
+      await this.UsuarioRepository.delete(userId);
+      
+      return {
+        status: true,
+        mensagem: 'Usuário excluído com sucesso'
+      };
+    } catch (error) {
+      return {
+        status: false,
+        mensagem: 'Erro ao excluir usuário'
+      };
+    }
+  }
+
+  async removerAviso(userId: number): Promise<{ status: boolean; mensagem: string; avisos: number }> {
+    try {
+      const usuario = await this.UsuarioRepository.findOne({ where: { id: userId } });
+      
+      if (!usuario) {
+        return {
+          status: false,
+          mensagem: 'Usuário não encontrado',
+          avisos: 0
+        };
+      }
+
+      if (usuario.avisos > 0) {
+        usuario.avisos -= 1;
+        await this.UsuarioRepository.save(usuario);
+      }
+
+      return {
+        status: true,
+        mensagem: `Aviso removido. Usuário possui agora ${usuario.avisos} aviso(s).`,
+        avisos: usuario.avisos
+      };
+    } catch (error) {
+      return {
+        status: false,
+        mensagem: 'Erro ao remover aviso',
+        avisos: 0
+      };
+    }
+  }
+
+  async limparAvisos(userId: number): Promise<{ status: boolean; mensagem: string }> {
+    try {
+      const usuario = await this.UsuarioRepository.findOne({ where: { id: userId } });
+      
+      if (!usuario) {
+        return {
+          status: false,
+          mensagem: 'Usuário não encontrado'
+        };
+      }
+
+      usuario.avisos = 0;
+      await this.UsuarioRepository.save(usuario);
+
+      return {
+        status: true,
+        mensagem: 'Todos os avisos foram removidos'
+      };
+    } catch (error) {
+      return {
+        status: false,
+        mensagem: 'Erro ao limpar avisos'
+      };
+    }
+  }
+
+  async excluirMinhaAccount(userId: number): Promise<{ status: boolean; mensagem: string }> {
+    try {
+      const usuario = await this.UsuarioRepository.findOne({ where: { id: userId } });
+      
+      if (!usuario) {
+        return {
+          status: false,
+          mensagem: 'Usuário não encontrado'
+        };
+      }
+
+      await this.UsuarioRepository.delete(userId);
+      
+      return {
+        status: true,
+        mensagem: 'Sua conta foi excluída com sucesso'
+      };
+    } catch (error) {
+      return {
+        status: false,
+        mensagem: 'Erro ao excluir conta'
+      };
+    }
+  }
 }

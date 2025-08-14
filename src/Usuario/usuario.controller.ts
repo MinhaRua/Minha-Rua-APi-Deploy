@@ -121,7 +121,8 @@ async adicionarAviso(
   @Req() req,
   @Body() data: { userId: number; locationId: number }
 ) {
-  if (!req.user?.isAdmin) {
+  const isAdmin = await this.usuarioService.verificarAdmin(req.user.id);
+  if (!isAdmin) {
     throw new HttpException('Apenas administradores podem adicionar avisos.', HttpStatus.FORBIDDEN);
   }
 
@@ -132,6 +133,68 @@ async adicionarAviso(
   }
 
   return aviso;
+}
+
+@UseGuards(JwtAuthGuard)
+@Get('admin/usuarios')
+async listarTodosUsuarios(@Req() req) {
+  const isAdmin = await this.usuarioService.verificarAdmin(req.user.id);
+  if (!isAdmin) {
+    throw new HttpException('Apenas administradores podem listar usuários.', HttpStatus.FORBIDDEN);
+  }
+
+  return this.usuarioService.listarTodosUsuarios();
+}
+
+@UseGuards(JwtAuthGuard)
+@Get('admin/pesquisar')
+async pesquisarUsuarios(@Req() req, @Body() data: { termo: string }) {
+  const isAdmin = await this.usuarioService.verificarAdmin(req.user.id);
+  if (!isAdmin) {
+    throw new HttpException('Apenas administradores podem pesquisar usuários.', HttpStatus.FORBIDDEN);
+  }
+
+  return this.usuarioService.pesquisarUsuarios(data.termo);
+}
+
+@UseGuards(JwtAuthGuard)
+@Post('admin/excluir-usuario')
+async excluirUsuario(@Req() req, @Body() data: { userId: number }) {
+  const isAdmin = await this.usuarioService.verificarAdmin(req.user.id);
+  if (!isAdmin) {
+    throw new HttpException('Apenas administradores podem excluir usuários.', HttpStatus.FORBIDDEN);
+  }
+
+  return this.usuarioService.excluirUsuario(data.userId);
+}
+
+@UseGuards(JwtAuthGuard)
+@Post('admin/remover-aviso')
+async removerAviso(@Req() req, @Body() data: { userId: number }) {
+  const isAdmin = await this.usuarioService.verificarAdmin(req.user.id);
+  if (!isAdmin) {
+    throw new HttpException('Apenas administradores podem remover avisos.', HttpStatus.FORBIDDEN);
+  }
+
+  return this.usuarioService.removerAviso(data.userId);
+}
+
+@UseGuards(JwtAuthGuard)
+@Post('admin/limpar-avisos')
+async limparAvisos(@Req() req, @Body() data: { userId: number }) {
+  const isAdmin = await this.usuarioService.verificarAdmin(req.user.id);
+  if (!isAdmin) {
+    throw new HttpException('Apenas administradores podem limpar avisos.', HttpStatus.FORBIDDEN);
+  }
+
+  return this.usuarioService.limparAvisos(data.userId);
+}
+
+@UseGuards(JwtAuthGuard)
+@Post('excluir-conta')
+async excluirMinhaAccount(@Req() req) {
+  const userId = req.user.id;
+  return this.usuarioService.excluirMinhaAccount(userId);
 }
 
 }
